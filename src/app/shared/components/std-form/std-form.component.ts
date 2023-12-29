@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { StdService } from '../../services/std.service';
 
 @Component({
   selector: 'app-std-form',
@@ -10,6 +11,9 @@ export class StdFormComponent implements OnInit {
 
   stdForm!: FormGroup;
 
+  stdArr!:Array<any> ;
+
+  private _stdService = inject(StdService)
   constructor() { }
 
   ngOnInit(): void {
@@ -20,14 +24,17 @@ export class StdFormComponent implements OnInit {
     this.stdForm = new FormGroup({
       fname: new FormControl(null, Validators.required),
       lname: new FormControl(null, Validators.required),
-
     })
-
   }
 
   onFormSubmit() {
-    console.log(this.stdForm.value);
-    
+    let newstdObj = this.stdForm.value
+
+    this._stdService.sendNewStd(newstdObj)
+
+    // this.stdArr.push(newstdObj)
+    // console.log(this.stdArr);
+
 
 
   }
