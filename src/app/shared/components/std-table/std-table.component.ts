@@ -9,16 +9,25 @@ import { observable } from 'rxjs';
 })
 export class StdTableComponent implements OnInit {
 
-  stdArr: Array<any> =[];
+  stdArr: Array<any> = [];
   private _stdService = inject(StdService)
   constructor() { }
 
   ngOnInit(): void {
-    this._stdService.newStdSubjectAsObs$ 
-      .subscribe((res:any) => {
+    this._stdService.newStdSubjectAsObs$
+      .subscribe((res: any) => {
         console.log(res)
         this.stdArr.push(res)
       });
+
+
+
+    this._stdService.getAllStd()
+
+      .subscribe(res => {
+        this.stdArr = res;
+      });
+
   }
 
 }
