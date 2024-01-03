@@ -16,7 +16,6 @@ export class StdTableComponent implements OnInit {
   ngOnInit(): void {
     this._stdService.newStdSubjectAsObs$
       .subscribe((res: any) => {
-        console.log(res)
         this.stdArr.push(res)
       });
 
@@ -28,6 +27,19 @@ export class StdTableComponent implements OnInit {
         this.stdArr = res;
       });
 
+    this._stdService.updtStdSubjectAsObs$
+      .subscribe((res: any) => {
+
+        let updIndex = this.stdArr.findIndex(std => std.stdId === res.stdId)
+        this.stdArr[updIndex] = res;
+
+
+      });
+
   }
 
+  onStdEdit(id: string) {
+    this._stdService.getObj(id)
+
+  }
 }

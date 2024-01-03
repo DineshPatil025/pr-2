@@ -7,5 +7,8 @@
         <label for="lname">Last Name</label>
         <input type="text" formControlName="lname" class="form-control">
     </div>
-    <button class="btn btn-primary"> Submit</button>
+    <button class="btn btn-primary" *ngIf="!isInEditMode"> Submit </button>
+    <button class="btn btn-primary" *ngIf="isInEditMode" type="button" 
+    (click)="OnStdUpdate()"
+    > Update </button>
 </form>

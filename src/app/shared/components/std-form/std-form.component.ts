@@ -10,11 +10,20 @@ import { StdService } from '../../services/std.service';
 export class StdFormComponent implements OnInit {
 
   stdForm!: FormGroup;
-
-  stdArr!:Array<any> ;
+  stdArr!: Array<any>;
+  patchStd!: any;
+  isInEditMode: boolean = false;
 
   private _stdService = inject(StdService)
-  constructor() { }
+  constructor() {
+
+    this._stdService.editStdSubjectAsObs$
+      .subscribe(res => {
+        this.patchStd = res
+        this.stdForm.patchValue(this.patchStd)
+        this.isInEditMode = true;
+      })
+  }
 
   ngOnInit(): void {
     this.createStdForm()
@@ -31,10 +40,15 @@ export class StdFormComponent implements OnInit {
     let newstdObj = this.stdForm.value
 
     this._stdService.sendNewStd(newstdObj)
+    this.stdForm.reset();
 
-    // this.stdArr.push(newstdObj)
-    // console.log(this.stdArr);
+  }
 
+  OnStdUpdate() {
+    let updId = this.patchStd.stdId;
+    let updStd = this.stdForm.value;
+    console.log(updStd);
+    this._stdService.sendUpdtedStd(updId, updStd);
 
 
   }
